@@ -1,5 +1,6 @@
 package com.raultorinz.simpletodo.ui.main
 
+import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
@@ -28,6 +30,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -36,6 +39,7 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         collapsing_toolbar.title = Calendar.getInstance().time.toString()
+        collapsing_toolbar.setContentScrimColor(Color.BLACK)
 
         layoutManager = LinearLayoutManager(context)
         toDoList.layoutManager = layoutManager
