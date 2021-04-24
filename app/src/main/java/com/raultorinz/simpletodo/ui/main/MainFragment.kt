@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
@@ -49,6 +49,7 @@ class MainFragment : Fragment() {
         addButton.setOnClickListener {
             viewModel.createElement()
             (adapter as RecyclerAdapter).notifyDataSetChanged()
+            Navigation.findNavController(it).navigate(R.id.addTaskFragment)
         }
     }
 
