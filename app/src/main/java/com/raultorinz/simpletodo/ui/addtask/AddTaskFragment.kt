@@ -38,12 +38,12 @@ class AddTaskFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AddTaskViewModel::class.java)
         toolbarTask.setNavigationOnClickListener {
-            Navigation.findNavController(it).navigateUp()
+            Navigation.findNavController(it).popBackStack()
         }
         saveTask.setOnClickListener {
             viewModel.insert(
                 Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), Calendar.getInstance().time.toString()))
-            Navigation.findNavController(it).navigateUp()
+            Navigation.findNavController(it).popBackStack()
         }
     }
 
