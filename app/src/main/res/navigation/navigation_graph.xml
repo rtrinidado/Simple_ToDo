@@ -17,11 +17,5 @@
         android:id="@+id/addTaskFragment"
         android:name="com.raultorinz.simpletodo.ui.addtask.AddTaskFragment"
         android:label="add_task_fragment"
-        tools:layout="@layout/add_task_fragment" >
-        <action
-            android:id="@+id/addTaskFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/add_task_fragment" />
 </navigation>

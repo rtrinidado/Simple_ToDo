@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
         addButton.setOnClickListener {
             viewModel.createElement()
             (adapter as RecyclerAdapter).notifyDataSetChanged()
-            Navigation.findNavController(it).navigate(R.id.addTaskFragment)
+            Navigation.findNavController(it).navigate(R.id.mainFragment_to_addTaskFragment)
         }
     }
 
