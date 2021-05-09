@@ -16,6 +16,9 @@ import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -34,11 +37,15 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        collapsing_toolbar.title = Calendar.getInstance().time.toString()
+        val date = String.format(
+            "%s %s/%s", LocalDate.now().dayOfWeek.toString(),
+            LocalDate.now().dayOfMonth.toString(), LocalDate.now().month
+        )
+        collapsing_toolbar.title = date
         collapsing_toolbar.setContentScrimColor(Color.BLACK)
 
-        viewModel.getAllTasks()?.observe(viewLifecycleOwner, Observer {
-            tasks -> tasks?.let { adapter?.setTaskList(it) }
+        viewModel.getAllTasks()?.observe(viewLifecycleOwner, Observer { tasks ->
+            tasks?.let { adapter?.setTaskList(it) }
         })
 
         layoutManager = LinearLayoutManager(context)
