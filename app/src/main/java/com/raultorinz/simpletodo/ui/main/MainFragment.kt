@@ -43,7 +43,7 @@ class MainFragment : Fragment() {
 
         layoutManager = LinearLayoutManager(context)
         toDoList.layoutManager = layoutManager
-        adapter = RecyclerAdapter()
+        adapter = RecyclerAdapter(viewModel)
         toDoList.adapter = adapter
 
         addButton.setOnClickListener {

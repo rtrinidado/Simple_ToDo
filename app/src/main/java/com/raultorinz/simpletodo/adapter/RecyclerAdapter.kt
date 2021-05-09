@@ -7,21 +7,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.room.Task
+import com.raultorinz.simpletodo.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.todo_element_layout.view.*
 
-class RecyclerAdapter() : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(viewModel: MainViewModel) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     private var taskList : List<Task>? = null
-
     private val italic : Typeface = Typeface.create("Sans", Typeface.ITALIC)
-    inner class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private val viewModel = viewModel
+
+    inner class ViewHolder (itemView: View, viewModel: MainViewModel) : RecyclerView.ViewHolder(itemView) {
         var check = itemView.radioButton
         var name = itemView.toDoText
 
         init {
             check.setOnClickListener {
-                if (check.isChecked) {
-                    name.typeface = italic
-                }
+                viewModel.updateTaskStatus(name.text.toString(), check.isChecked)
             }
         }
     }
@@ -33,7 +33,7 @@ class RecyclerAdapter() : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.todo_element_layout, parent, false)
-        return ViewHolder(v)
+        return ViewHolder(v, viewModel)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

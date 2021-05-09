@@ -10,9 +10,10 @@ class Task {
     @ColumnInfo(name = "idTask")
     var id : Long = 0
 
-    @ColumnInfo(name = "isCompleted")
+    @ColumnInfo(name = "completed")
     var completed : Boolean = false
 
+    @ColumnInfo(name = "name")
     var name : String? = null
     var description : String? = null
 
