@@ -1,27 +1,20 @@
 package com.raultorinz.simpletodo.ui.addtask
 
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.room.Task
 import kotlinx.android.synthetic.main.add_task_fragment.*
-import kotlinx.android.synthetic.main.main_fragment.*
 import java.util.*
 
 class AddTaskFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = AddTaskFragment()
-    }
-
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction (uri: Uri)
     }
@@ -36,10 +29,12 @@ class AddTaskFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AddTaskViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(AddTaskViewModel::class.java)
+
         toolbarTask.setNavigationOnClickListener {
             Navigation.findNavController(it).popBackStack()
         }
+
         saveTask.setOnClickListener {
             viewModel.insert(
                 Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), Calendar.getInstance().time.toString()))

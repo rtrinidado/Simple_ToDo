@@ -1,22 +1,21 @@
 package com.raultorinz.simpletodo.ui.main
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.raultorinz.simpletodo.model.TaskModel
+import com.raultorinz.simpletodo.room.Task
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = MainRepository(application)
+    private val allTasks : LiveData<List<Task>>? = repository.allTasks
     var taskList : ArrayList<TaskModel> = ArrayList()
     var count : Long = 0
 
-    fun createElement() {
-        var created = Calendar.getInstance()
-        var element = TaskModel(++count, false, "Tarea ${count}", "", created.time.toString())
-        taskList.add(element)
-    }
 
-    fun getList() : List<TaskModel> {
-        return taskList
+    fun getAllTasks(): LiveData<List<Task>>? {
+        return allTasks
     }
 }

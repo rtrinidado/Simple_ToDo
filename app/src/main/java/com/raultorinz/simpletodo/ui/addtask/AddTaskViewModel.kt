@@ -1,14 +1,13 @@
 package com.raultorinz.simpletodo.ui.addtask
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.raultorinz.simpletodo.model.TaskModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import com.raultorinz.simpletodo.room.Task
-import com.raultorinz.simpletodo.room.TaskRoomDatabase
-import kotlinx.coroutines.launch
 
-class AddTaskViewModel : ViewModel() {
+class AddTaskViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = AddTaskRepository(application)
+
     fun insert(task: Task) {
+        repository.insert(task)
     }
 }

@@ -1,0 +1,30 @@
+package com.raultorinz.simpletodo.room
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "tasks")
+class Task {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "idTask")
+    var id : Long = 0
+
+    @ColumnInfo(name = "isCompleted")
+    var completed : Boolean = false
+
+    var name : String? = null
+    var description : String? = null
+
+    @ColumnInfo(name = "createdDate")
+    var created : String? = null
+
+    constructor(){}
+
+    constructor(completed: Boolean, name: String, description: String, created: String) {
+        this.completed = completed
+        this.name = name
+        this.description = description
+        this.created = created
+    }
+}
