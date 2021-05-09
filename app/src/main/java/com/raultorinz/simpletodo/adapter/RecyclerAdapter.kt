@@ -10,18 +10,22 @@ import com.raultorinz.simpletodo.room.Task
 import com.raultorinz.simpletodo.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.todo_element_layout.view.*
 
-class RecyclerAdapter(viewModel: MainViewModel) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
-    private var taskList : List<Task>? = null
-    private val italic : Typeface = Typeface.create("Sans", Typeface.ITALIC)
-    private val viewModel = viewModel
+class RecyclerAdapter(private val viewModel: MainViewModel) :
+    RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+    private var taskList: List<Task>? = null
 
-    inner class ViewHolder (itemView: View, viewModel: MainViewModel) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, viewModel: MainViewModel) :
+        RecyclerView.ViewHolder(itemView) {
         var check = itemView.radioButton
         var name = itemView.toDoText
+        var delete = itemView.deleteButton
 
         init {
             check.setOnClickListener {
                 viewModel.updateTaskStatus(name.text.toString(), check.isChecked)
+            }
+            delete.setOnClickListener {
+                viewModel.deleteTask(name.text.toString())
             }
         }
     }

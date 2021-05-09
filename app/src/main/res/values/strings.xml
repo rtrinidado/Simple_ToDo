@@ -3,4 +3,5 @@
     <string name="task_name">Nombre de tarea</string>
     <string name="task_description">Descripción de la tarea</string>
     <string name="save_task">Guardar Tarea</string>
+    <string name="delete_button">Delete button</string>
 </resources>

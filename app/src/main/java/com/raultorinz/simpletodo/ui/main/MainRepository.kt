@@ -25,4 +25,10 @@ class MainRepository(application: Application) {
             taskDao?.updateTaskStatus(name, completed)
         }
     }
+
+    fun deleteTask(name: String) {
+        coroutineScope.launch(Dispatchers.Main) {
+            taskDao?.deleteTask(name)
+        }
+    }
 }
