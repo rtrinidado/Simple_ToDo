@@ -11,9 +11,9 @@
         android:id="@+id/toolbarTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_grotto"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        style="@style/fragment_toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/abc_vector_test"
         app:title="Tarea" />
@@ -39,6 +39,7 @@
         android:hint="@string/task_name"
         android:inputType="textPersonName"
         android:textSize="24sp"
+        style="@style/text_element"
         app:layout_constraintBottom_toBottomOf="@id/completeCheck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/completeCheck" />
@@ -54,6 +55,7 @@
         android:gravity="start|top"
         android:hint="@string/task_description"
         android:inputType="textMultiLine"
+        style="@style/text_element"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameTask" />

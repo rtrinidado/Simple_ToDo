@@ -31,7 +31,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        collapsing_toolbar.setContentScrimColor(resources.getColor(R.color.blue_grotto, null))
+        collapsing_toolbar.setContentScrimColor(resources.getColor(R.color.navy_blue, null))
         viewModel.getAllTasks()?.observe(viewLifecycleOwner, Observer { tasks ->
             tasks?.let { adapter?.setTaskList(it) }
         })

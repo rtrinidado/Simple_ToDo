@@ -13,10 +13,24 @@
         <!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.SimpleToDo.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="fragment_toolbar">
+        <item name="android:background">@color/navy_blue</item>
+    </style>
+
+    <style name="text_element">
+        <item name="android:textColor">@color/blue_grotto</item>
+    </style>
+
+    <style name="background_list">
+        <item name="android:background">@color/baby_blue</item>
+    </style>
+
     <style name="Theme.CardDemo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CardDemo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

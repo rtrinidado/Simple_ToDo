@@ -2,15 +2,23 @@
     <!-- Base application theme. -->
     <style name="Theme.SimpleToDo" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/navy_blue</item>
+        <item name="colorPrimaryVariant">@color/blue_grotto</item>
+        <item name="colorOnPrimary">@color/baby_blue</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/blue_grotto</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="text_element">
+        <item name="android:textColor">@color/baby_blue</item>
+    </style>
+
+    <style name="background_list">
+        <item name="android:background">@color/navy_blue</item>
     </style>
 </resources>
