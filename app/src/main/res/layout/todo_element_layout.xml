@@ -2,14 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/card_view"
-    android:layout_marginHorizontal="10dp"
+    android:layout_marginHorizontal="5dp"
     android:layout_marginVertical="2dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="3dp"
-    app:contentPadding="4dp"
-    android:foreground="?selectableItemBackground"
+    app:cardElevation="2dp"
+    app:contentPadding="2dp"
     android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +20,6 @@
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            tools:text=""
             app:layout_constraintBottom_toBottomOf="@+id/toDoText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toDoText" />
@@ -31,12 +28,13 @@
             android:id="@+id/toDoText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/blue_grotto"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintStart_toEndOf="@id/radioButton"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:fontFamily="sans-serif"
-            android:textSize="18sp"
             tools:text="Tarea 1" />
 
         <ImageView
@@ -47,7 +45,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/toDoText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toDoText"
-            app:srcCompat="@android:drawable/ic_delete" />
+            app:srcCompat="@android:drawable/ic_menu_delete" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

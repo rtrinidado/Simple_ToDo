@@ -1,12 +1,9 @@
 package com.raultorinz.simpletodo.ui.main
 
-import android.graphics.Color
 import androidx.lifecycle.Observer
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -16,10 +13,7 @@ import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.*
 
 class MainFragment : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -37,13 +31,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        val date = String.format(
-            "%s %s/%s", LocalDate.now().dayOfWeek.toString(),
-            LocalDate.now().dayOfMonth.toString(), LocalDate.now().month
-        )
-        collapsing_toolbar.title = date
-        collapsing_toolbar.setContentScrimColor(Color.BLACK)
-
+        collapsing_toolbar.setContentScrimColor(resources.getColor(R.color.blue_grotto, null))
         viewModel.getAllTasks()?.observe(viewLifecycleOwner, Observer { tasks ->
             tasks?.let { adapter?.setTaskList(it) }
         })
@@ -58,4 +46,16 @@ class MainFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        showDate()
+    }
+
+    fun showDate() {
+        val date = String.format(
+                "%s %s/%s", LocalDate.now().dayOfWeek.toString(),
+                LocalDate.now().dayOfMonth.toString(), LocalDate.now().month
+        )
+        collapsing_toolbar.title = date
+    }
 }
