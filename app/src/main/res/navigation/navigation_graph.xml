@@ -17,5 +17,9 @@
         android:id="@+id/addTaskFragment"
         android:name="com.raultorinz.simpletodo.ui.addtask.AddTaskFragment"
         android:label="add_task_fragment"
-        tools:layout="@layout/add_task_fragment" />
+        tools:layout="@layout/add_task_fragment">
+        <argument
+            android:name="nameTask"
+            app:argType="string" />
+    </fragment>
 </navigation>

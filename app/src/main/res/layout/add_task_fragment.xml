@@ -37,7 +37,7 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/task_name"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:textSize="24sp"
         style="@style/text_element"
         app:layout_constraintBottom_toBottomOf="@id/completeCheck"

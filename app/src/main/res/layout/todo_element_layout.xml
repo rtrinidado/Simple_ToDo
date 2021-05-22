@@ -9,6 +9,7 @@
     android:layout_marginVertical="2dp"
     app:cardElevation="2dp"
     app:contentPadding="2dp"
+    android:foreground="?selectableItemBackground"
     android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout

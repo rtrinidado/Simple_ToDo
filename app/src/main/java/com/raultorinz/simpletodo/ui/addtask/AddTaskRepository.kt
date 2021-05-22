@@ -4,9 +4,7 @@ import android.app.Application
 import com.raultorinz.simpletodo.room.Task
 import com.raultorinz.simpletodo.room.TaskDao
 import com.raultorinz.simpletodo.room.TaskRoomDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class AddTaskRepository(application: Application) {
 
@@ -18,9 +16,15 @@ class AddTaskRepository(application: Application) {
         taskDao = db.taskDao()
     }
 
-    fun insert(task : Task) {
+    fun insert(task: Task) {
         coroutineScope.launch(Dispatchers.Main) {
             taskDao?.insert(task)
         }
     }
+
+    fun showTask(name: String): Deferred<Task> =
+        coroutineScope.async(Dispatchers.Default) {
+            return@async taskDao?.getTask(name)!!
+        }
+
 }

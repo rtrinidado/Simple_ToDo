@@ -1,12 +1,13 @@
 package com.raultorinz.simpletodo.adapter
 
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.room.Task
+import com.raultorinz.simpletodo.ui.main.MainFragmentDirections
 import com.raultorinz.simpletodo.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.todo_element_layout.view.*
 
@@ -21,6 +22,12 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
         var delete = itemView.deleteButton
 
         init {
+            itemView.setOnClickListener {
+                var action =
+                    MainFragmentDirections.mainFragmentToAddTaskFragment(name.text.toString())
+                Navigation.findNavController(it).navigate(action)
+            }
+
             check.setOnClickListener {
                 viewModel.updateTaskStatus(name.text.toString(), check.isChecked)
             }
@@ -43,7 +50,7 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         taskList.let {
             holder.check.isChecked = it!![position].completed
-            holder.name.text = it!![position].name
+            holder.name.text = it[position].name
         }
     }
 
