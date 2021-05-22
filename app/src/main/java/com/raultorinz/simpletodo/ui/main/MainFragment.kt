@@ -13,7 +13,9 @@ import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.adapter.RecyclerAdapter
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.main_fragment.*
-import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MainFragment : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -51,11 +53,10 @@ class MainFragment : Fragment() {
         showDate()
     }
 
-    fun showDate() {
-        val date = String.format(
-                "%s %s/%s", LocalDate.now().dayOfWeek.toString(),
-                LocalDate.now().dayOfMonth.toString(), LocalDate.now().month
-        )
-        collapsing_toolbar.title = date
+    private fun showDate() {
+        val local = Locale("es", "MX")
+        val time = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("EEEE dd MMM", local)
+        collapsing_toolbar.title = time.format(formatter)
     }
 }
