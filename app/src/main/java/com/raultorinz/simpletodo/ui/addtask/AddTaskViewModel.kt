@@ -30,7 +30,9 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
             result = repository.showTask(idTask).await()
             if (result != null) {
                 completeCheck.isChecked = result!!.completed
+                nameTask.text.clear()
                 nameTask.text.append(result!!.name)
+                description.text.clear()
                 description.text.append(result!!.description)
             }
         }
