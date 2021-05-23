@@ -34,6 +34,7 @@ class AddTaskFragment : Fragment() {
         arguments?.let {
             val args = AddTaskFragmentArgs.fromBundle(it)
             if (args.idTask > 0) {
+                deleteTask.isEnabled = true
                 viewModel.showTask(completeCheck, nameTask, description, args.idTask)
             }
         }
@@ -49,7 +50,12 @@ class AddTaskFragment : Fragment() {
 
         saveTask.setOnClickListener {
             viewModel.insert(
-                Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), Calendar.getInstance().time.toString()))
+                    Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), Calendar.getInstance().time.toString()))
+            Navigation.findNavController(it).popBackStack()
+        }
+
+        deleteTask.setOnClickListener {
+            viewModel.deleteTask()
             Navigation.findNavController(it).popBackStack()
         }
     }

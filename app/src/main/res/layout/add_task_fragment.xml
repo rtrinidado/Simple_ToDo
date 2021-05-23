@@ -9,11 +9,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarTask"
+        style="@style/fragment_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        style="@style/fragment_toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/abc_vector_test"
         app:title="Tarea" />
@@ -23,7 +23,7 @@
         style="@android:style/Widget.Material.CompoundButton.CheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="64dp"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,34 +31,48 @@
 
     <EditText
         android:id="@+id/nameTask"
+        style="@style/text_element"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/task_name"
         android:inputType="textMultiLine"
         android:textSize="24sp"
-        style="@style/text_element"
         app:layout_constraintBottom_toBottomOf="@id/completeCheck"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/completeCheck"
         app:layout_constraintTop_toTopOf="@id/completeCheck" />
 
     <EditText
         android:id="@+id/description"
+        style="@style/text_element"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="28dp"
         android:layout_marginTop="44dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/task_description"
         android:inputType="textMultiLine"
-        style="@style/text_element"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameTask" />
+
+    <Button
+        android:id="@+id/deleteTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/delete_task"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/saveTask"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/saveTask"
@@ -68,6 +82,7 @@
         android:text="@string/save_task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/deleteTask" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

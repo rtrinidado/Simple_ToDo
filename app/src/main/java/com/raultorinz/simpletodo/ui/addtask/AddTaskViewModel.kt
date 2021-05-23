@@ -19,10 +19,8 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
         if (result == null)
             repository.insert(task)
         else {
-            result!!.name = task.name
-            result!!.description = task.description
-            result!!.completed = task.completed
-            repository.update(result!!)
+            task.id = result!!.id
+            repository.update(task)
         }
     }
 
@@ -38,6 +36,10 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
                 description.text.append(result!!.description)
             }
         }
+    }
+
+    fun deleteTask() {
+        repository.deleteTask(result!!.id)
     }
 
 }
