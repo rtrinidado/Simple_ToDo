@@ -20,19 +20,20 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
         var check = itemView.radioButton
         var name = itemView.toDoText
         var delete = itemView.deleteButton
+        var id: Long = 0
 
         init {
             itemView.setOnClickListener {
-                var action =
-                    MainFragmentDirections.mainFragmentToAddTaskFragment(name.text.toString())
+                var action = MainFragmentDirections.mainFragmentToAddTaskFragment()
+                action.idTask = id
                 Navigation.findNavController(it).navigate(action)
             }
 
             check.setOnClickListener {
-                viewModel.updateTaskStatus(name.text.toString(), check.isChecked)
+                viewModel.updateTaskStatus(id, check.isChecked)
             }
             delete.setOnClickListener {
-                viewModel.deleteTask(name.text.toString())
+                viewModel.deleteTask(id)
             }
         }
     }
@@ -51,6 +52,7 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
         taskList.let {
             holder.check.isChecked = it!![position].completed
             holder.name.text = it[position].name
+            holder.id = it[position].id
         }
     }
 

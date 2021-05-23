@@ -33,8 +33,8 @@ class AddTaskFragment : Fragment() {
         super.onStart()
         arguments?.let {
             val args = AddTaskFragmentArgs.fromBundle(it)
-            if (args.nameTask.isNotEmpty()) {
-                viewModel.showTask(completeCheck, nameTask, description, args.nameTask)
+            if (args.idTask > 0) {
+                viewModel.showTask(completeCheck, nameTask, description, args.idTask)
             }
         }
     }

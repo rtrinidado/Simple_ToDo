@@ -13,11 +13,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return allTasks
     }
 
-    fun updateTaskStatus(name: String, completed: Boolean) {
-        repository.updateTaskStatus(name, completed)
+    fun updateTaskStatus(idTask: Long, completed: Boolean) {
+        repository.updateTaskStatus(idTask, completed)
     }
 
-    fun deleteTask(name: String) {
-        repository.deleteTask(name)
+    fun deleteTask(id: Long) {
+        repository.deleteTask(id)
     }
 }

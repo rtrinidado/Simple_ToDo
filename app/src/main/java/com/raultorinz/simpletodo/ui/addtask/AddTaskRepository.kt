@@ -22,9 +22,15 @@ class AddTaskRepository(application: Application) {
         }
     }
 
-    fun showTask(name: String): Deferred<Task> =
+    fun update(task: Task) {
+        coroutineScope.launch(Dispatchers.Main) {
+            taskDao?.updateTask(task)
+        }
+    }
+
+    fun showTask(idTask: Long): Deferred<Task?> =
         coroutineScope.async(Dispatchers.Default) {
-            return@async taskDao?.getTask(name)!!
+            return@async taskDao?.getTask(idTask)
         }
 
 }

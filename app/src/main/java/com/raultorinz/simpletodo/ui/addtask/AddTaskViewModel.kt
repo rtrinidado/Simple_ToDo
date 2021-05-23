@@ -12,17 +12,27 @@ import kotlinx.coroutines.launch
 class AddTaskViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AddTaskRepository(application)
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private var result: Task? = null
 
     fun insert(task: Task) {
-        repository.insert(task)
+        if (result == null)
+            repository.insert(task)
+        else {
+            result!!.name = task.name
+            result!!.description = task.description
+            result!!.completed = task.completed
+            repository.update(result!!)
+        }
     }
 
-    fun showTask(completeCheck: CheckBox, nameTask: EditText, description: EditText, name: String) {
+    fun showTask(completeCheck: CheckBox, nameTask: EditText, description: EditText, idTask: Long) {
         coroutineScope.launch(Dispatchers.Main) {
-            var result: Task = repository.showTask(name).await()
-            completeCheck.isChecked = result.completed
-            nameTask.text.append(result.name)
-            description.text.append(result.description)
+            result = repository.showTask(idTask).await()
+            if (result != null) {
+                completeCheck.isChecked = result!!.completed
+                nameTask.text.append(result!!.name)
+                description.text.append(result!!.description)
+            }
         }
     }
 

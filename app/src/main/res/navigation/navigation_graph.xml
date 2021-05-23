@@ -19,7 +19,8 @@
         android:label="add_task_fragment"
         tools:layout="@layout/add_task_fragment">
         <argument
-            android:name="nameTask"
-            app:argType="string" />
+            android:name="idTask"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
 </navigation>

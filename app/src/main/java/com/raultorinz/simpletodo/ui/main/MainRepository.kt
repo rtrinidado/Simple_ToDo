@@ -20,15 +20,15 @@ class MainRepository(application: Application) {
         allTasks = taskDao?.getAllTasks()
     }
 
-    fun updateTaskStatus(name: String, completed: Boolean) {
+    fun updateTaskStatus(idTask: Long, completed: Boolean) {
         coroutineScope.launch(Dispatchers.Main) {
-            taskDao?.updateTaskStatus(name, completed)
+            taskDao?.updateTaskStatus(idTask, completed)
         }
     }
 
-    fun deleteTask(name: String) {
+    fun deleteTask(id: Long) {
         coroutineScope.launch(Dispatchers.Main) {
-            taskDao?.deleteTask(name)
+            taskDao?.deleteTask(id)
         }
     }
 }
