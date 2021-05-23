@@ -1,6 +1,7 @@
 package com.raultorinz.simpletodo.ui.addtask
 
 import android.app.Application
+import android.graphics.Paint
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
@@ -32,6 +33,7 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
                 completeCheck.isChecked = result!!.completed
                 nameTask.text.clear()
                 nameTask.text.append(result!!.name)
+                nameTask.paintFlags = if (result!!.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
                 description.text.clear()
                 description.text.append(result!!.description)
             }

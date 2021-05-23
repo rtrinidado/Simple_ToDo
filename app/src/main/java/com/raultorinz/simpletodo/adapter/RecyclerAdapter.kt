@@ -1,8 +1,10 @@
 package com.raultorinz.simpletodo.adapter
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
@@ -52,6 +54,7 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
         taskList.let {
             holder.check.isChecked = it!![position].completed
             holder.name.text = it[position].name
+            holder.name.paintFlags = if (it[position].completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
             holder.id = it[position].id
         }
     }
