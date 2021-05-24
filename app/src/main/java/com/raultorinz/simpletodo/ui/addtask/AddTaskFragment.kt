@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.room.Task
 import kotlinx.android.synthetic.main.add_task_fragment.*
+import kotlinx.android.synthetic.main.add_task_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,6 +49,7 @@ class AddTaskFragment : Fragment() {
                         nameTask.paintFlags = if (result!!.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
                         description.text.clear()
                         description.text.append(result!!.description)
+                        description.dateTask.text = result!!.dateTask
                     }
                 }
             }
@@ -64,7 +66,7 @@ class AddTaskFragment : Fragment() {
 
         saveTask.setOnClickListener {
             viewModel.insert(
-                    Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), Calendar.getInstance().time.toString()))
+                    Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), dateTask.text.toString()))
             Navigation.findNavController(it).popBackStack()
         }
 
