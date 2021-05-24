@@ -1,5 +1,6 @@
 package com.raultorinz.simpletodo.ui.addtask
 
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +13,9 @@ import androidx.navigation.Navigation
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.room.Task
 import kotlinx.android.synthetic.main.add_task_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class AddTaskFragment : Fragment() {
@@ -35,7 +39,17 @@ class AddTaskFragment : Fragment() {
             val args = AddTaskFragmentArgs.fromBundle(it)
             if (args.idTask > 0) {
                 deleteTask.isEnabled = true
-                viewModel.showTask(completeCheck, nameTask, description, args.idTask)
+                CoroutineScope(Dispatchers.Main).launch {
+                    var result: Task? = viewModel.showTask(args.idTask).await()
+                    if (result != null) {
+                        completeCheck.isChecked = result!!.completed
+                        nameTask.text.clear()
+                        nameTask.text.append(result!!.name)
+                        nameTask.paintFlags = if (result!!.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
+                        description.text.clear()
+                        description.text.append(result!!.description)
+                    }
+                }
             }
         }
     }

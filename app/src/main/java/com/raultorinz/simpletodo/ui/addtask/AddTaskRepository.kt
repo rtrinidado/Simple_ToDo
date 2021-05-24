@@ -34,9 +34,7 @@ class AddTaskRepository(application: Application) {
         }
     }
 
-    fun showTask(idTask: Long): Deferred<Task?> =
-            coroutineScope.async(Dispatchers.Default) {
-                return@async taskDao?.getTask(idTask)
-            }
-
+    suspend fun showTask(idTask: Long): Task? {
+        return taskDao?.getTask(idTask)
+    }
 }

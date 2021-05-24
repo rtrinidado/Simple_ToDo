@@ -18,7 +18,7 @@ class Task {
     var description : String? = null
 
     @ColumnInfo(name = "createdDate")
-    var created : String? = null
+    var dateTask: String? = null
 
     constructor(){}
 
@@ -26,6 +26,6 @@ class Task {
         this.completed = completed
         this.name = name
         this.description = description
-        this.created = created
+        this.dateTask = created
     }
 }
