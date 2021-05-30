@@ -1,6 +1,7 @@
 package com.raultorinz.simpletodo.ui.addtask
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
@@ -18,8 +19,12 @@ import kotlinx.android.synthetic.main.add_task_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddTaskFragment : Fragment() {
+    private val myCalendar: Calendar = Calendar.getInstance()
+
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
     }
@@ -49,7 +54,8 @@ class AddTaskFragment : Fragment() {
                         nameTask.paintFlags = if (result.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
                         description.text.clear()
                         description.text.append(result.description)
-                        dateTask.text = result.dateTask
+                        dateTask.text.clear()
+                        dateTask.text.append(result.dateTask)
                     }
                 }
             }
@@ -77,12 +83,36 @@ class AddTaskFragment : Fragment() {
             viewModel.deleteTask()
             Navigation.findNavController(it).popBackStack()
         }
+
+
+        val date = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, month)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDate()
+        }
+
+        dateTask.setOnClickListener {
+            context?.let { it ->
+                DatePickerDialog(it, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+            }
+        }
     }
 
-    fun unfocused() {
+    private fun updateDate() {
+        val format = "dd/MM/yy"
+        val local = Locale("es", "MX")
+        val simpleDateFormat = SimpleDateFormat(format, local)
+        dateTask.text.clear()
+        dateTask.text.append(simpleDateFormat.format(myCalendar.time))
+    }
+
+    private fun unfocused() {
         val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
         view?.clearFocus()
     }
+
+
 
 }
