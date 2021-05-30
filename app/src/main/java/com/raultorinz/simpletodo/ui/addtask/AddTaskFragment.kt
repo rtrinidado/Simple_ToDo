@@ -1,5 +1,6 @@
 package com.raultorinz.simpletodo.ui.addtask
 
+import android.app.Activity
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -59,19 +61,28 @@ class AddTaskFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(AddTaskViewModel::class.java)
 
         toolbarTask.setNavigationOnClickListener {
+            unfocused()
             Navigation.findNavController(it).popBackStack()
         }
 
         saveTask.setOnClickListener {
+            unfocused()
             viewModel.insert(
                     Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), dateTask.text.toString()))
             Navigation.findNavController(it).popBackStack()
         }
 
         deleteTask.setOnClickListener {
+            unfocused()
             viewModel.deleteTask()
             Navigation.findNavController(it).popBackStack()
         }
+    }
+
+    fun unfocused() {
+        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+        view?.clearFocus()
     }
 
 }
