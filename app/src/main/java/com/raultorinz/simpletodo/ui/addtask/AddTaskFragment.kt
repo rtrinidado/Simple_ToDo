@@ -13,11 +13,9 @@ import androidx.navigation.Navigation
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.room.Task
 import kotlinx.android.synthetic.main.add_task_fragment.*
-import kotlinx.android.synthetic.main.add_task_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 class AddTaskFragment : Fragment() {
     interface OnFragmentInteractionListener {
@@ -41,15 +39,15 @@ class AddTaskFragment : Fragment() {
             if (args.idTask > 0) {
                 deleteTask.isEnabled = true
                 CoroutineScope(Dispatchers.Main).launch {
-                    var result: Task? = viewModel.showTask(args.idTask).await()
+                    val result: Task? = viewModel.showTask(args.idTask).await()
                     if (result != null) {
-                        completeCheck.isChecked = result!!.completed
+                        completeCheck.isChecked = result.completed
                         nameTask.text.clear()
-                        nameTask.text.append(result!!.name)
-                        nameTask.paintFlags = if (result!!.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
+                        nameTask.text.append(result.name)
+                        nameTask.paintFlags = if (result.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
                         description.text.clear()
-                        description.text.append(result!!.description)
-                        description.dateTask.text = result!!.dateTask
+                        description.text.append(result.description)
+                        dateTask.text = result.dateTask
                     }
                 }
             }
