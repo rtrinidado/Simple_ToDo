@@ -32,8 +32,8 @@ class AddTaskFragment : Fragment() {
     private lateinit var viewModel: AddTaskViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity).setSupportActionBar(toolbarTask)
         return inflater.inflate(R.layout.add_task_fragment, container, false)
@@ -48,6 +48,7 @@ class AddTaskFragment : Fragment() {
                 CoroutineScope(Dispatchers.Main).launch {
                     val result: Task? = viewModel.showTask(args.idTask).await()
                     if (result != null) {
+                        viewModel.result = result
                         completeCheck.isChecked = result.completed
                         nameTask.text.clear()
                         nameTask.text.append(result.name)
