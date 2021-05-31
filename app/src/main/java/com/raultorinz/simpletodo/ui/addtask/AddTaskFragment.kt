@@ -101,7 +101,7 @@ class AddTaskFragment : Fragment() {
     }
 
     private fun updateDate() {
-        val format = getString(R.string.date_hint)
+        val format = getString(R.string.date_format)
         val local = Locale("es", "MX")
         val simpleDateFormat = SimpleDateFormat(format, local)
         dateTask.text.clear()
