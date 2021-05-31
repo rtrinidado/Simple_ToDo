@@ -15,15 +15,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="2dp">
 
         <CheckBox
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/toDoText"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toDoText" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/toDoText"
@@ -32,20 +32,35 @@
             android:fontFamily="sans-serif"
             android:textSize="18sp"
             style="@style/text_element"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintStart_toEndOf="@id/radioButton"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/toDoDate"
             tools:text="Tarea 1" />
+
+        <TextView
+            android:id="@+id/toDoDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            style="@style/text_element"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/deleteButton"
+            app:layout_constraintStart_toEndOf="@id/radioButton"
+            app:layout_constraintTop_toBottomOf="@id/toDoText"
+            tools:text="30/05/21" />
 
         <ImageView
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/delete_button"
-            app:layout_constraintBottom_toBottomOf="@+id/toDoText"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toDoText"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_delete" />
 
 

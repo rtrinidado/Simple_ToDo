@@ -21,6 +21,7 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
         RecyclerView.ViewHolder(itemView) {
         var check = itemView.radioButton
         var name = itemView.toDoText
+        var date = itemView.toDoDate
         var delete = itemView.deleteButton
         var id: Long = 0
 
@@ -55,6 +56,8 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
             holder.check.isChecked = it!![position].completed
             holder.name.text = it[position].name
             holder.name.paintFlags = if (it[position].completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
+            holder.date.text = it[position].dateTask
+            holder.date.visibility = if (it[position].dateTask.isNullOrEmpty()) View.GONE else View.VISIBLE
             holder.id = it[position].id
         }
     }
