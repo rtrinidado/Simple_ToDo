@@ -39,7 +39,7 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/task_name"
-        android:inputType="textMultiLine"
+        android:inputType="textAutoCorrect|textMultiLine|textCapSentences"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@id/completeCheck"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="40dp"
         android:focusable="false"
-        android:text="@string/date_hint"
+        android:hint="@string/date_hint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description" />
 
