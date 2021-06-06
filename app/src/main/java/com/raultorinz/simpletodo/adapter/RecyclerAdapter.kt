@@ -1,10 +1,11 @@
 package com.raultorinz.simpletodo.adapter
 
+import android.content.Context
+import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
@@ -12,13 +13,16 @@ import com.raultorinz.simpletodo.room.Task
 import com.raultorinz.simpletodo.ui.main.MainFragmentDirections
 import com.raultorinz.simpletodo.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.todo_element_layout.view.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
-class RecyclerAdapter(private val viewModel: MainViewModel) :
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(private val viewModel: MainViewModel, private val context: Context) :
+        RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     private var taskList: List<Task>? = null
 
     inner class ViewHolder(itemView: View, viewModel: MainViewModel) :
-        RecyclerView.ViewHolder(itemView) {
+            RecyclerView.ViewHolder(itemView) {
         var check = itemView.radioButton
         var name = itemView.toDoText
         var date = itemView.toDoDate
@@ -57,12 +61,32 @@ class RecyclerAdapter(private val viewModel: MainViewModel) :
             holder.name.text = it[position].name
             holder.name.paintFlags = if (it[position].completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
             holder.date.text = it[position].dateTask
-            holder.date.visibility = if (it[position].dateTask.isNullOrEmpty()) View.GONE else View.VISIBLE
+            if (it[position].dateTask.isNullOrEmpty()) {
+                holder.date.visibility = View.GONE
+            } else {
+                holder.date.setTextColor(checkDate(it[position].dateTask!!, it[position].completed))
+                holder.date.visibility = View.VISIBLE
+            }
             holder.id = it[position].id
         }
     }
 
     override fun getItemCount(): Int {
         return if (taskList == null) 0 else taskList!!.size
+    }
+
+    private fun checkDate(dateS: String, checked: Boolean): Int {
+        val format = context.getString(R.string.date_format)
+        val local = Locale("es", "MX")
+        val today = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern(format, local)
+        val date = LocalDate.parse(dateS, formatter)
+        val comparison = today.compareTo(date)
+        return when {
+            checked -> context.getColor(R.color.blue_grotto)
+            comparison > 0 -> context.getColor(R.color.rose_red)
+            else -> Color.GRAY
+        }
+
     }
 }
