@@ -27,15 +27,15 @@
 
         <TextView
             android:id="@+id/toDoText"
+            style="@style/text_element"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textSize="18sp"
-            style="@style/text_element"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintStart_toEndOf="@id/radioButton"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/toDoDate"
+            app:layout_constraintBottom_toTopOf="@id/toDoDate"
             tools:text="Tarea 1" />
 
         <TextView
@@ -45,13 +45,12 @@
             android:fontFamily="sans-serif"
             android:textSize="14sp"
             android:visibility="gone"
-            tools:visibility="visible"
-            style="@style/text_element"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintStart_toEndOf="@id/radioButton"
             app:layout_constraintTop_toBottomOf="@id/toDoText"
-            tools:text="30/05/21" />
+            tools:text="30/05/21"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/deleteButton"
