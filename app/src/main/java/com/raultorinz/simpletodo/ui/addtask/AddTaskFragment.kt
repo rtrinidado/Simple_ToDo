@@ -11,29 +11,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.raultorinz.simpletodo.R
-import com.raultorinz.simpletodo.room.Task
+import com.raultorinz.simpletodo.databinding.AddTaskFragmentBinding
 import kotlinx.android.synthetic.main.add_task_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+import com.raultorinz.simpletodo.BR.addTaskVM
+
 class AddTaskFragment : Fragment() {
     private val myCalendar: Calendar = Calendar.getInstance()
+    private lateinit var viewModel: AddTaskViewModel
+    private lateinit var binding: AddTaskFragmentBinding
 
     interface OnFragmentInteractionListener {
         fun onFragmentInteraction(uri: Uri)
     }
 
-    private lateinit var viewModel: AddTaskViewModel
-
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         (activity as AppCompatActivity).setSupportActionBar(toolbarTask)
-        return inflater.inflate(R.layout.add_task_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.add_task_fragment, container, false)
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onStart() {
@@ -41,29 +46,29 @@ class AddTaskFragment : Fragment() {
         arguments?.let {
             val args = AddTaskFragmentArgs.fromBundle(it)
             if (args.idTask > 0) {
-                deleteTask.isEnabled = true
+                binding.deleteTask.isEnabled = true
                 viewModel.getPreviousTask(args.idTask)
             }
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(AddTaskViewModel::class.java)
+        binding.setVariable(addTaskVM, viewModel)
 
-        toolbarTask.setNavigationOnClickListener {
+        binding.toolbarTask.setNavigationOnClickListener {
             unfocused()
             Navigation.findNavController(it).popBackStack()
         }
 
-        saveTask.setOnClickListener {
+        binding.saveTask.setOnClickListener {
             unfocused()
-            viewModel.insert(
-                    Task(completeCheck.isChecked, nameTask.text.toString(), description.text.toString(), dateTask.text.toString()))
+            viewModel.insertUpdateTask()
             Navigation.findNavController(it).popBackStack()
         }
 
-        deleteTask.setOnClickListener {
+        binding.deleteTask.setOnClickListener {
             unfocused()
             viewModel.deleteTask()
             Navigation.findNavController(it).popBackStack()
@@ -76,30 +81,35 @@ class AddTaskFragment : Fragment() {
             updateDate()
         }
 
-        dateTask.setOnClickListener {
+        binding.dateTask.setOnClickListener {
             context?.let {
-                DatePickerDialog(it, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+                DatePickerDialog(
+                    it, date, myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
             }
         }
 
+        binding.completeCheck.setOnClickListener {
+            strikeText(binding.completeCheck.isChecked)
+        }
+
         viewModel.task.observe(viewLifecycleOwner, {
-            completeCheck.isChecked = it.completed
-            nameTask.text.clear()
-            nameTask.text.append(if (it.name != null) it.name else "")
-            nameTask.paintFlags = if (it.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
-            description.text.clear()
-            description.text.append(if (it.description != null) it.description else "")
-            dateTask.text.clear()
-            dateTask.text.append(if (it.dateTask != null) it.dateTask else "")
+            strikeText(it.completed)
         })
+    }
+
+    private fun strikeText(isChecked: Boolean) {
+        binding.nameTask.paintFlags =
+            if (isChecked) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
     }
 
     private fun updateDate() {
         val format = getString(R.string.date_format)
         val local = Locale("es", "MX")
         val simpleDateFormat = SimpleDateFormat(format, local)
-        dateTask.text.clear()
-        dateTask.text.append(simpleDateFormat.format(myCalendar.time))
+        binding.dateTask.text.clear()
+        binding.dateTask.text.append(simpleDateFormat.format(myCalendar.time))
     }
 
     private fun unfocused() {

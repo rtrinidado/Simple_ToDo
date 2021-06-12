@@ -26,16 +26,14 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun insert(newElement: Task) {
-        if (task.value?.id == 0L)
-            repository.insert(newElement)
-        else {
-            newElement.id = task.value!!.id
-            repository.update(newElement)
-        }
-    }
-
     fun deleteTask() {
         repository.deleteTask(task.value!!.id)
+    }
+
+    fun insertUpdateTask() {
+        if (task.value?.id == 0L)
+            repository.insert(task.value!!)
+        else
+            repository.update(task.value!!)
     }
 }

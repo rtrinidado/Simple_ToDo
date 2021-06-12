@@ -1,102 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.addtask.AddTaskFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarTask"
-        style="@style/fragment_toolbar"
+    <data>
+
+        <variable
+            name="addTaskVM"
+            type="com.raultorinz.simpletodo.ui.addtask.AddTaskViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/abc_vector_test"
-        app:title="Tarea" />
+        android:layout_height="match_parent"
+        tools:context=".ui.addtask.AddTaskFragment">
 
-    <CheckBox
-        android:id="@+id/completeCheck"
-        style="@android:style/Widget.Material.CompoundButton.CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="64dp"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarTask" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarTask"
+            style="@style/fragment_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/abc_vector_test"
+            app:title="Tarea" />
 
-    <EditText
-        android:id="@+id/nameTask"
-        style="@style/text_element"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/task_name"
-        android:inputType="textAutoCorrect|textMultiLine|textCapSentences"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/completeCheck"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/completeCheck"
-        app:layout_constraintTop_toTopOf="@id/completeCheck" />
+        <CheckBox
+            android:id="@+id/completeCheck"
+            style="@android:style/Widget.Material.CompoundButton.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="64dp"
+            android:textSize="14sp"
+            android:checked="@={addTaskVM.task.completed}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarTask" />
 
-    <EditText
-        android:id="@+id/description"
-        style="@style/text_element"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="28dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/task_description"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameTask" />
+        <EditText
+            android:id="@+id/nameTask"
+            style="@style/text_element"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/task_name"
+            android:inputType="textAutoCorrect|textMultiLine|textCapSentences"
+            android:textSize="24sp"
+            android:text="@={addTaskVM.task.name}"
+            app:layout_constraintBottom_toBottomOf="@id/completeCheck"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/completeCheck"
+            app:layout_constraintTop_toTopOf="@id/completeCheck" />
 
-    <Button
-        android:id="@+id/deleteTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/delete_task"
-        android:enabled="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/saveTask"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/description"
+            style="@style/text_element"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="28dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/task_description"
+            android:inputType="textMultiLine"
+            android:text="@={addTaskVM.task.description}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameTask" />
 
-    <Button
-        android:id="@+id/saveTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/save_task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/deleteTask" />
+        <Button
+            android:id="@+id/deleteTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/delete_task"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/saveTask"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/dateTask"
-        style="@style/text_element"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="40dp"
-        android:focusable="false"
-        android:hint="@string/date_hint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        <Button
+            android:id="@+id/saveTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/save_task"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/deleteTask" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/dateTask"
+            style="@style/text_element"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:focusable="false"
+            android:hint="@string/date_hint"
+            android:text="@={addTaskVM.task.dateTask}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description"
+            android:inputType="date"
+            android:importantForAutofill="no" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
