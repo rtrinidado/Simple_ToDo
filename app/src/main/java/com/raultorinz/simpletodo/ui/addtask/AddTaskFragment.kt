@@ -11,14 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.room.Task
 import kotlinx.android.synthetic.main.add_task_fragment.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,27 +42,14 @@ class AddTaskFragment : Fragment() {
             val args = AddTaskFragmentArgs.fromBundle(it)
             if (args.idTask > 0) {
                 deleteTask.isEnabled = true
-                CoroutineScope(Dispatchers.Main).launch {
-                    val result: Task? = viewModel.showTask(args.idTask).await()
-                    if (result != null) {
-                        viewModel.result = result
-                        completeCheck.isChecked = result.completed
-                        nameTask.text.clear()
-                        nameTask.text.append(result.name)
-                        nameTask.paintFlags = if (result.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
-                        description.text.clear()
-                        description.text.append(result.description)
-                        dateTask.text.clear()
-                        dateTask.text.append(result.dateTask)
-                    }
-                }
+                viewModel.getPreviousTask(args.idTask)
             }
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AddTaskViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AddTaskViewModel::class.java)
 
         toolbarTask.setNavigationOnClickListener {
             unfocused()
@@ -85,8 +69,7 @@ class AddTaskFragment : Fragment() {
             Navigation.findNavController(it).popBackStack()
         }
 
-
-        val date = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        val date = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, month)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -94,10 +77,21 @@ class AddTaskFragment : Fragment() {
         }
 
         dateTask.setOnClickListener {
-            context?.let { it ->
+            context?.let {
                 DatePickerDialog(it, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
+
+        viewModel.task.observe(viewLifecycleOwner, {
+            completeCheck.isChecked = it.completed
+            nameTask.text.clear()
+            nameTask.text.append(if (it.name != null) it.name else "")
+            nameTask.paintFlags = if (it.completed) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
+            description.text.clear()
+            description.text.append(if (it.description != null) it.description else "")
+            dateTask.text.clear()
+            dateTask.text.append(if (it.dateTask != null) it.dateTask else "")
+        })
     }
 
     private fun updateDate() {
@@ -113,7 +107,4 @@ class AddTaskFragment : Fragment() {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
         view?.clearFocus()
     }
-
-
-
 }

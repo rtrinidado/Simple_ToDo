@@ -2,30 +2,40 @@ package com.raultorinz.simpletodo.ui.addtask
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.raultorinz.simpletodo.room.Task
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class AddTaskViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AddTaskRepository(application)
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
-    var result: Task? = null
+    val task = MutableLiveData<Task>()
 
-    fun insert(task: Task) {
-        if (result == null)
-            repository.insert(task)
-        else {
-            task.id = result!!.id
-            repository.update(task)
+    init {
+        task.value = Task()
+    }
+
+    fun getPreviousTask(idTask: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                task.postValue(repository.showTask(idTask))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
-    fun showTask(idTask: Long): Deferred<Task?> =
-            coroutineScope.async(Dispatchers.Default) {
-                return@async repository.showTask(idTask)
-            }
-
-    fun deleteTask() {
-        repository.deleteTask(result!!.id)
+    fun insert(newElement: Task) {
+        if (task.value?.id == 0L)
+            repository.insert(newElement)
+        else {
+            newElement.id = task.value!!.id
+            repository.update(newElement)
+        }
     }
 
+    fun deleteTask() {
+        repository.deleteTask(task.value!!.id)
+    }
 }
