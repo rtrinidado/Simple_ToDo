@@ -12,6 +12,11 @@
         <!-- Status bar color. -->
         <!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
+    </style>
+
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/navy_blue</item>
     </style>
 
     <style name="Theme.SimpleToDo.NoActionBar">
@@ -24,11 +29,15 @@
     </style>
 
     <style name="text_element">
-        <item name="android:textColor">@color/blue_grotto</item>
+        <item name="android:textColor">@color/navy_blue</item>
     </style>
 
     <style name="background_list">
         <item name="android:background">@color/baby_blue</item>
+    </style>
+
+    <style name="icon_color">
+        <item name="android:tint">@color/navy_blue</item>
     </style>
 
     <style name="Theme.CardDemo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
