@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.databinding.AddTaskFragmentBinding
-import kotlinx.android.synthetic.main.add_task_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,9 +34,9 @@ class AddTaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).setSupportActionBar(toolbarTask)
         binding = DataBindingUtil.inflate(inflater, R.layout.add_task_fragment, container, false)
         binding.lifecycleOwner = this
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbarTask)
         return binding.root
     }
 
