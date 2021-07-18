@@ -99,7 +99,7 @@ class AddTaskFragment : Fragment() {
     }
 
     private fun strikeText(isChecked: Boolean) {
-        binding.nameTask.paintFlags =
+        binding.nameTaskEdit.paintFlags =
             if (isChecked) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
     }
 
@@ -107,8 +107,8 @@ class AddTaskFragment : Fragment() {
         val format = getString(R.string.date_format)
         val local = Locale("es", "MX")
         val simpleDateFormat = SimpleDateFormat(format, local)
-        binding.dateTask.text.clear()
-        binding.dateTask.text.append(simpleDateFormat.format(myCalendar.time))
+        binding.dateTask.text?.clear()
+        binding.dateTask.text?.append(simpleDateFormat.format(myCalendar.time))
     }
 
     private fun unfocused() {

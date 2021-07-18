@@ -24,7 +24,7 @@
             app:navigationIcon="@drawable/abc_vector_test"
             app:title="Tarea" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/completeCheck"
             style="@android:style/Widget.Material.CompoundButton.CheckBox"
             android:layout_width="wrap_content"
@@ -36,42 +36,73 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbarTask" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameTask"
-            style="@style/text_element"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginEnd="28dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/task_name"
-            android:inputType="textAutoCorrect|textMultiLine|textCapSentences"
-            android:textSize="24sp"
-            android:text="@={addTaskVM.task.name}"
-            app:layout_constraintBottom_toBottomOf="@id/completeCheck"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="42dp"
+            style="@style/TextInputLayoutStyle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/completeCheck"
-            app:layout_constraintTop_toTopOf="@id/completeCheck" />
+            app:layout_constraintStart_toEndOf="@id/completeCheck"
+            app:layout_constraintTop_toBottomOf="@id/toolbarTask">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameTaskEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/task_name"
+                android:text="@={addTaskVM.task.name}"
+                android:inputType="textAutoCorrect|textMultiLine|textCapSentences"
+                android:textSize="24sp"
+                style="@style/text_element" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description"
-            style="@style/text_element"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="28dp"
-            android:autofillHints=""
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="@string/task_description"
-            android:inputType="textMultiLine"
-            android:text="@={addTaskVM.task.description}"
+            style="@style/TextInputLayoutStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameTask" />
+            app:layout_constraintTop_toBottomOf="@id/nameTask">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|top"
+                android:hint="@string/task_description"
+                android:inputType="textMultiLine"
+                android:text="@={addTaskVM.task.description}"
+                style="@style/text_element" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            style="@style/TextInputLayoutStyle"
+            app:startIconDrawable="@drawable/ic_round_date_range_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dateTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date_hint"
+                android:text="@={addTaskVM.task.dateTask}"
+                android:focusable="false"
+                android:inputType="date"
+                android:importantForAutofill="no"
+                style="@style/text_element" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/deleteTask"
@@ -96,20 +127,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/deleteTask" />
 
-        <EditText
-            android:id="@+id/dateTask"
-            style="@style/text_element"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="40dp"
-            android:focusable="false"
-            android:hint="@string/date_hint"
-            android:text="@={addTaskVM.task.dateTask}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description"
-            android:inputType="date"
-            android:importantForAutofill="no" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

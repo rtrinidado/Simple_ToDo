@@ -19,6 +19,17 @@
         <item name="android:colorAccent">@color/baby_blue</item>
     </style>
 
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/baby_blue</item>
+        <item name="android:colorAccent">@color/baby_blue</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="errorEnabled">true</item>
+        <item name="hintTextColor">@color/blue_grotto</item>
+        <item name="android:textColorHint">@color/blue_grotto</item>
+        <item name="startIconTint">@color/baby_blue</item>
+    </style>
+
     <style name="text_element">
         <item name="android:textColor">@color/baby_blue</item>
     </style>

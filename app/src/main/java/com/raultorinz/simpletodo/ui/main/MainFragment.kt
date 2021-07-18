@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
     private fun showDate() {
         val local = Locale("es", "MX")
         val time = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("EEEE dd MMM", local)
+        val formatter = DateTimeFormatter.ofPattern("EEEE dd MMMM", local)
         binding.collapsingToolbar.title = time.format(formatter)
     }
 }

@@ -5,6 +5,6 @@
     <string name="save_task">Guardar Tarea</string>
     <string name="delete_task">Eliminar Tarea</string>
     <string name="delete_button">Delete button</string>
-    <string name="date_hint">dd/mm/yy</string>
+    <string name="date_hint">Fecha</string>
     <string name="date_format">dd/MM/yy</string>
 </resources>
