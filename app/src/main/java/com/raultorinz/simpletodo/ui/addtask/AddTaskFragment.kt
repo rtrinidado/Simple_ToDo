@@ -2,6 +2,7 @@ package com.raultorinz.simpletodo.ui.addtask
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
@@ -55,6 +56,11 @@ class AddTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(AddTaskViewModel::class.java)
         binding.setVariable(addTaskVM, viewModel)
+
+        binding.root.setOnClickListener {
+            val inm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inm.hideSoftInputFromWindow(it.windowToken, 0)
+        }
 
         binding.toolbarTask.setNavigationOnClickListener {
             unfocused()
