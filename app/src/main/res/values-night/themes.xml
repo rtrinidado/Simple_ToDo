@@ -26,7 +26,6 @@
         <item name="boxStrokeWidth">1dp</item>
         <item name="errorEnabled">true</item>
         <item name="hintTextColor">@color/blue_grotto</item>
-        <item name="android:textColorHint">@color/blue_grotto</item>
         <item name="startIconTint">@color/baby_blue</item>
     </style>
 
