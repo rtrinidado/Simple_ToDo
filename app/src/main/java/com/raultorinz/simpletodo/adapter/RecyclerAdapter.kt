@@ -46,12 +46,17 @@ class RecyclerAdapter(private val viewModel: MainViewModel, private val context:
     }
 
     fun setTaskList(tasks: List<Task>) {
-        taskList = tasks
+        taskList = orderList(tasks)
         notifyDataSetChanged()
     }
 
+    private fun orderList(tasks: List<Task>): List<Task> {
+        return tasks.sortedBy { getDate(it.dateTask ?: "") }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.todo_element_layout, parent, false)
+        val v =
+            LayoutInflater.from(parent.context).inflate(R.layout.todo_element_layout, parent, false)
         return ViewHolder(v, viewModel)
     }
 
@@ -75,18 +80,25 @@ class RecyclerAdapter(private val viewModel: MainViewModel, private val context:
         return if (taskList == null) 0 else taskList!!.size
     }
 
-    private fun checkDate(dateS: String, checked: Boolean): Int {
+    private fun getDate(dateS: String): LocalDate {
+
         val format = context.getString(R.string.date_format)
         val local = Locale("es", "MX")
-        val today = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern(format, local)
-        val date = LocalDate.parse(dateS, formatter)
+        return if (dateS.isNotEmpty())
+            LocalDate.parse(dateS, formatter)
+        else
+            LocalDate.MIN
+    }
+
+    private fun checkDate(dateS: String, checked: Boolean): Int {
+        val today = LocalDate.now()
+        val date = getDate(dateS)
         val comparison = today.compareTo(date)
         return when {
             checked -> context.getColor(R.color.blue_grotto)
             comparison > 0 -> context.getColor(R.color.rose_red)
             else -> Color.GRAY
         }
-
     }
 }
