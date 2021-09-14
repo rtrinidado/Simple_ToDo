@@ -10,14 +10,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainRepository(application: Application) {
-    val allTasks : LiveData<List<Task>>?
+    val completedTasks: LiveData<List<Task>>?
+    val incompletedTasks: LiveData<List<Task>>?
     private var taskDao: TaskDao?
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     init {
         val db = TaskRoomDatabase.getDatabase(application)
         taskDao = db.taskDao()
-        allTasks = taskDao?.getAllTasks()
+        completedTasks = taskDao?.getAllCompletedTasks()
+        incompletedTasks = taskDao?.getAllIncompletedTasks()
     }
 
     fun updateTaskStatus(idTask: Long, completed: Boolean) {

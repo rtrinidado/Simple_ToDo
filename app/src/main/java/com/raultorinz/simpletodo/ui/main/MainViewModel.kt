@@ -7,11 +7,8 @@ import com.raultorinz.simpletodo.room.Task
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = MainRepository(application)
-    private val allTasks: LiveData<List<Task>>? = repository.allTasks
-
-    fun getAllTasks(): LiveData<List<Task>>? {
-        return allTasks
-    }
+    val completedTasks: LiveData<List<Task>>? = repository.completedTasks
+    val incompletedTasks: LiveData<List<Task>>? = repository.incompletedTasks
 
     fun updateTaskStatus(idTask: Long, completed: Boolean) {
         repository.updateTaskStatus(idTask, completed)

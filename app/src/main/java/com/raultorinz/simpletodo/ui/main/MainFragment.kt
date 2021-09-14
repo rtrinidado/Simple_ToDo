@@ -19,13 +19,15 @@ import com.raultorinz.simpletodo.BR.mainFragmentVM
 import com.raultorinz.simpletodo.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerAdapter? = null
+    private var adapterToDo: RecyclerAdapter? = null
+    private var adapterDone: RecyclerAdapter? = null
     private lateinit var binding: MainFragmentBinding
     private lateinit var viewModel: MainViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
         binding.lifecycleOwner = this
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
@@ -38,14 +40,23 @@ class MainFragment : Fragment() {
         binding.setVariable(mainFragmentVM, viewModel)
 
         binding.collapsingToolbar.setContentScrimColor(resources.getColor(R.color.navy_blue, null))
-        viewModel.getAllTasks()?.observe(viewLifecycleOwner, { tasks ->
-            tasks?.let { adapter?.setTaskList(it) }
+
+        viewModel.incompletedTasks?.observe(viewLifecycleOwner, {
+            adapterToDo?.setTaskList(it)
         })
 
-        layoutManager = LinearLayoutManager(context)
-        binding.contentMain.toDoList.layoutManager = layoutManager
-        adapter = RecyclerAdapter(viewModel, requireContext())
-        binding.contentMain.toDoList.adapter = adapter
+        viewModel.completedTasks?.observe(viewLifecycleOwner, {
+            adapterDone?.setTaskList(it)
+        })
+
+        binding.contentMain.toDoList.layoutManager = LinearLayoutManager(context)
+        binding.contentMain.doneList.layoutManager = LinearLayoutManager(context)
+
+        adapterToDo = RecyclerAdapter(viewModel, requireContext())
+        adapterDone = RecyclerAdapter(viewModel, requireContext())
+
+        binding.contentMain.toDoList.adapter = adapterToDo
+        binding.contentMain.doneList.adapter = adapterDone
 
         binding.addButton.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.mainFragment_to_addTaskFragment)
