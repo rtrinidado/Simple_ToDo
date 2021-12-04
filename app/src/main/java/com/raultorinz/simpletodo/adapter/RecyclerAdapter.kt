@@ -21,7 +21,7 @@ class RecyclerAdapter(private val viewModel: MainViewModel, private val context:
         RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     private var taskList: List<Task>? = null
 
-    inner class ViewHolder(val binding: TodoElementLayoutBinding, viewModel: MainViewModel) :
+    inner class ViewHolder(val binding: TodoElementLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var name = binding.toDoText
 
@@ -51,7 +51,7 @@ class RecyclerAdapter(private val viewModel: MainViewModel, private val context:
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = TodoElementLayoutBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(binding, viewModel)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
