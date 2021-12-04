@@ -1,70 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/card_view"
-    android:layout_marginHorizontal="5dp"
-    android:layout_marginVertical="2dp"
-    app:cardElevation="2dp"
-    app:contentPadding="2dp"
-    android:foreground="?selectableItemBackground"
-    android:clickable="true">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.widget.CompoundButton" />
+
+        <variable
+            name="task"
+            type="com.raultorinz.simpletodo.room.Task" />
+
+        <variable
+            name="viewModel"
+            type="com.raultorinz.simpletodo.ui.main.MainViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.raultorinz.simpletodo.adapter.RecyclerAdapter" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="2dp">
+        android:id="@+id/card_view"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="2dp"
+        app:cardElevation="2dp"
+        app:contentPadding="2dp"
+        android:foreground="?selectableItemBackground"
+        android:clickable="true"
+        android:onClick="@{(view) -> adapter.seeTask(task.id, view)}">
 
-        <CheckBox
-            android:id="@+id/radioButton"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="2dp">
 
-        <TextView
-            android:id="@+id/toDoText"
-            style="@style/text_element"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@id/deleteButton"
-            app:layout_constraintStart_toEndOf="@id/radioButton"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/toDoDate"
-            tools:text="Tarea 1" />
+            <CheckBox
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{task.completed}"
+                android:onClick="@{(view) -> viewModel.updateTaskStatus(task.id, ((CompoundButton)view).isChecked())}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/toDoDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textSize="14sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/deleteButton"
-            app:layout_constraintStart_toEndOf="@id/radioButton"
-            app:layout_constraintTop_toBottomOf="@id/toDoText"
-            tools:text="30/05/21"
-            tools:visibility="visible" />
+            <TextView
+                android:id="@+id/toDoText"
+                style="@style/text_element"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textSize="18sp"
+                android:text="@{task.name}"
+                app:layout_constraintEnd_toStartOf="@id/deleteButton"
+                app:layout_constraintStart_toEndOf="@id/radioButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/toDoDate"
+                tools:text="Tarea 1" />
 
-        <ImageView
-            style="@style/icon_color"
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/delete_button"
-            android:paddingHorizontal="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+            <TextView
+                android:id="@+id/toDoDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:visibility="@{task.dateTask == null || task.dateTask.empty ? View.GONE : View.VISIBLE}"
+                android:text="@{task.dateTask}"
+                android:textColor="@{adapter.checkDate(task.dateTask, task.completed) }"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/deleteButton"
+                app:layout_constraintStart_toEndOf="@id/radioButton"
+                app:layout_constraintTop_toBottomOf="@id/toDoText"
+                tools:text="30/05/21"
+                tools:visibility="visible" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+            <ImageView
+                style="@style/icon_color"
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/delete_button"
+                android:paddingHorizontal="4dp"
+                android:onClick="@{() -> viewModel.deleteTask(task.id)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
