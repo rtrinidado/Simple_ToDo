@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 import com.raultorinz.simpletodo.BR.addTaskVM
+import com.raultorinz.simpletodo.BR.addTaskView
 
 class AddTaskFragment : Fragment() {
     private val myCalendar: Calendar = Calendar.getInstance()
@@ -46,7 +47,6 @@ class AddTaskFragment : Fragment() {
         arguments?.let {
             val args = AddTaskFragmentArgs.fromBundle(it)
             if (args.idTask > 0) {
-                binding.deleteTask.isEnabled = true
                 viewModel.getPreviousTask(args.idTask)
             }
         }
@@ -56,47 +56,11 @@ class AddTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(AddTaskViewModel::class.java)
         binding.setVariable(addTaskVM, viewModel)
-
-        binding.root.setOnClickListener {
-            val inm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inm.hideSoftInputFromWindow(it.windowToken, 0)
-        }
+        binding.setVariable(addTaskView, this)
 
         binding.toolbarTask.setNavigationOnClickListener {
             unfocused()
             Navigation.findNavController(it).popBackStack()
-        }
-
-        binding.saveTask.setOnClickListener {
-            unfocused()
-            viewModel.insertUpdateTask()
-            Navigation.findNavController(it).popBackStack()
-        }
-
-        binding.deleteTask.setOnClickListener {
-            unfocused()
-            viewModel.deleteTask()
-            Navigation.findNavController(it).popBackStack()
-        }
-
-        val date = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            myCalendar.set(Calendar.YEAR, year)
-            myCalendar.set(Calendar.MONTH, month)
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            updateDate()
-        }
-
-        binding.dateTask.setOnClickListener {
-            context?.let {
-                DatePickerDialog(
-                    it, date, myCalendar.get(Calendar.YEAR),
-                    myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)
-                ).show()
-            }
-        }
-
-        binding.completeCheck.setOnClickListener {
-            strikeText(binding.completeCheck.isChecked)
         }
 
         viewModel.task.observe(viewLifecycleOwner, {
@@ -104,7 +68,35 @@ class AddTaskFragment : Fragment() {
         })
     }
 
-    private fun strikeText(isChecked: Boolean) {
+    fun showDatePicker() {
+        val date = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, month)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDate()
+        }
+
+        context?.let {
+            DatePickerDialog(
+                it, date, myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+    }
+
+    fun deleteTask() {
+        unfocused()
+        viewModel.deleteTask()
+        view?.let { Navigation.findNavController(it).popBackStack() }
+    }
+
+    fun saveTask() {
+        unfocused()
+        viewModel.insertUpdateTask()
+        view?.let { Navigation.findNavController(it).popBackStack() }
+    }
+
+    fun strikeText(isChecked: Boolean) {
         binding.nameTaskEdit.paintFlags =
             if (isChecked) Paint.STRIKE_THRU_TEXT_FLAG else Paint.HINTING_OFF
     }
@@ -117,7 +109,7 @@ class AddTaskFragment : Fragment() {
         binding.dateTask.text?.append(simpleDateFormat.format(myCalendar.time))
     }
 
-    private fun unfocused() {
+    fun unfocused() {
         val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
         view?.clearFocus()

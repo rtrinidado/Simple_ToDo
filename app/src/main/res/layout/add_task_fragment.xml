@@ -3,14 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+
+        <import type="android.widget.CompoundButton" />
+
         <variable
             name="addTaskVM"
             type="com.raultorinz.simpletodo.ui.addtask.AddTaskViewModel" />
+
+        <variable
+            name="addTaskView"
+            type="com.raultorinz.simpletodo.ui.addtask.AddTaskFragment" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:onClick="@{() -> addTaskView.unfocused()}"
         tools:context=".ui.addtask.AddTaskFragment">
 
         <androidx.appcompat.widget.Toolbar
@@ -33,6 +41,7 @@
             android:layout_marginTop="58dp"
             android:textSize="14sp"
             android:checked="@={addTaskVM.task.completed}"
+            android:onClick="@{(view) -> addTaskView.strikeText(((CompoundButton)view).isChecked())}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbarTask" />
 
@@ -102,6 +111,7 @@
                 android:focusable="false"
                 android:inputType="date"
                 android:importantForAutofill="no"
+                android:onClick="@{() -> addTaskView.showDatePicker()}"
                 style="@style/text_element" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="@string/delete_task"
-            android:enabled="false"
+            android:enabled="@{addTaskVM.task.id > 0}"
+            android:onClick="@{() -> addTaskView.deleteTask()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/saveTask"
             app:layout_constraintHorizontal_bias="0.5"
@@ -123,6 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="@string/save_task"
+            android:onClick="@{() -> addTaskView.saveTask()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
