@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 import com.raultorinz.simpletodo.BR.mainFragmentVM
+import com.raultorinz.simpletodo.BR.mainFragmentView
 import com.raultorinz.simpletodo.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -38,6 +39,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.setVariable(mainFragmentVM, viewModel)
+        binding.setVariable(mainFragmentView, this)
 
         binding.collapsingToolbar.setContentScrimColor(resources.getColor(R.color.navy_blue, null))
 
@@ -57,21 +59,16 @@ class MainFragment : Fragment() {
 
         binding.contentMain.toDoList.adapter = adapterToDo
         binding.contentMain.doneList.adapter = adapterDone
-
-        binding.addButton.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.mainFragment_to_addTaskFragment)
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        showDate()
+        viewModel.showDate()
     }
 
-    private fun showDate() {
-        val local = Locale("es", "MX")
-        val time = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("EEEE dd MMMM", local)
-        binding.collapsingToolbar.title = time.format(formatter)
+    fun goToAddTask() {
+        view?.let {
+            Navigation.findNavController(it).navigate(R.id.mainFragment_to_addTaskFragment)
+        }
     }
 }

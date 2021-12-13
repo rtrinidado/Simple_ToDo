@@ -7,4 +7,6 @@
     <string name="delete_button">Delete button</string>
     <string name="date_hint">Fecha</string>
     <string name="date_format">dd/MM/yy</string>
+    <string name="add_button_description">Boton para agregar</string>
+    <string name="backdrop_description">background</string>
 </resources>
