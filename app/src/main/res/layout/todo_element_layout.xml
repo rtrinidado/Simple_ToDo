@@ -11,7 +11,7 @@
 
         <variable
             name="task"
-            type="com.raultorinz.simpletodo.room.Task" />
+            type="com.raultorinz.simpletodo.data.source.room.Task" />
 
         <variable
             name="viewModel"

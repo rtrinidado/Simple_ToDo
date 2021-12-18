@@ -1,4 +1,4 @@
-package com.raultorinz.simpletodo.room
+package com.raultorinz.simpletodo.data.source.room
 
 import android.content.Context
 import androidx.room.Database

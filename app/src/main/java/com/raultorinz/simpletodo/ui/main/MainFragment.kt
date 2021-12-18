@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +18,17 @@ import java.util.*
 
 import com.raultorinz.simpletodo.BR.mainFragmentVM
 import com.raultorinz.simpletodo.BR.mainFragmentView
+import com.raultorinz.simpletodo.MainActivity
 import com.raultorinz.simpletodo.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
     private var adapterToDo: RecyclerAdapter? = null
     private var adapterDone: RecyclerAdapter? = null
     private lateinit var binding: MainFragmentBinding
-    private lateinit var viewModel: MainViewModel
+
+    private val viewModel by viewModels<MainViewModel> {
+        MainViewModelFactory((activity as MainActivity).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +42,12 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.setVariable(mainFragmentVM, viewModel)
         binding.setVariable(mainFragmentView, this)
 
         binding.collapsingToolbar.setContentScrimColor(resources.getColor(R.color.navy_blue, null))
 
-        viewModel.incompletedTasks?.observe(viewLifecycleOwner, {
+        viewModel.uncompletedTasks?.observe(viewLifecycleOwner, {
             adapterToDo?.setTaskList(it)
         })
 

@@ -1,15 +1,14 @@
 package com.raultorinz.simpletodo.ui.addtask
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.raultorinz.simpletodo.room.Task
+import androidx.lifecycle.*
+import com.raultorinz.simpletodo.data.source.TasksRepository
+import com.raultorinz.simpletodo.data.source.room.Task
+import com.raultorinz.simpletodo.ui.main.MainViewModel
 import kotlinx.coroutines.*
 import java.lang.Exception
 
-class AddTaskViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = AddTaskRepository(application)
+class AddTaskViewModel(private val repository: TasksRepository) : ViewModel() {
     val task = MutableLiveData<Task>()
 
     init {
@@ -36,4 +35,12 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
         else
             repository.update(task.value!!)
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+class AddTaskViewModelFactory(
+    private val tasksRepository: TasksRepository
+) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
+        (AddTaskViewModel(tasksRepository) as T)
 }

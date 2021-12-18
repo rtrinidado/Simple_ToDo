@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.databinding.TodoElementLayoutBinding
-import com.raultorinz.simpletodo.room.Task
+import com.raultorinz.simpletodo.data.source.room.Task
 import com.raultorinz.simpletodo.ui.main.MainFragmentDirections
 import com.raultorinz.simpletodo.ui.main.MainViewModel
 import java.time.LocalDate
