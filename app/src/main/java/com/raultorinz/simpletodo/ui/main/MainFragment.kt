@@ -6,19 +6,15 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.raultorinz.simpletodo.R
 import com.raultorinz.simpletodo.adapter.RecyclerAdapter
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 import com.raultorinz.simpletodo.BR.mainFragmentVM
 import com.raultorinz.simpletodo.BR.mainFragmentView
 import com.raultorinz.simpletodo.MainActivity
+import com.raultorinz.simpletodo.TodoApplication
 import com.raultorinz.simpletodo.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -27,7 +23,7 @@ class MainFragment : Fragment() {
     private lateinit var binding: MainFragmentBinding
 
     private val viewModel by viewModels<MainViewModel> {
-        MainViewModelFactory((activity as MainActivity).repository)
+        MainViewModelFactory((requireContext().applicationContext as TodoApplication).repository)
     }
 
     override fun onCreateView(
