@@ -25,7 +25,7 @@ import org.mockito.Mockito
 import java.io.IOException
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 
 import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description
@@ -103,6 +103,28 @@ class MainFragmentTest {
         onView(withId(R.id.addButton)).perform(click())
 
         verify(navController).navigate(R.id.mainFragment_to_addTaskFragment)
+    }
+
+    @Test
+    fun clickTask_navigateToAddTaskFragment() {
+        val scenario = launchFragmentInContainer<MainFragment>(Bundle(), R.style.Theme_SimpleToDo)
+        val navController = Mockito.mock(NavController::class.java)
+
+        scenario.onFragment {
+            Navigation.setViewNavController(it.view!!, navController)
+        }
+
+        val action = MainFragmentDirections.mainFragmentToAddTaskFragment()
+        action.idTask = 1
+
+        onView(withId(R.id.toDoList)).perform(
+            actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+
+        verify(navController).navigate(action)
     }
 
     private fun atPosition(position: Int, @NonNull itemMatcher: Matcher<View?>): Matcher<View?> {
