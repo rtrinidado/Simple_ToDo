@@ -25,11 +25,13 @@ import org.mockito.Mockito
 import java.io.IOException
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.contrib.RecyclerViewActions.*
 
 import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.hamcrest.core.AllOf.allOf
+import org.hamcrest.core.IsNot.not
 import org.mockito.Mockito.verify
 
 
@@ -125,6 +127,22 @@ class MainFragmentTest {
         )
 
         verify(navController).navigate(action)
+    }
+
+    @Test
+    fun checkTask_changeElementOfList() {
+        val scenario = launchFragmentInContainer<MainFragment>(Bundle(), R.style.Theme_SimpleToDo)
+        val navController = Mockito.mock(NavController::class.java)
+
+        scenario.onFragment {
+            Navigation.setViewNavController(it.view!!, navController)
+        }
+
+        onView(allOf(withId(R.id.radioButton), not(isChecked()))).perform(click())
+
+        onView(withId(R.id.doneList)).check(
+            matches(hasDescendant(withText("Prueba 1")))
+        )
     }
 
     private fun atPosition(position: Int, @NonNull itemMatcher: Matcher<View?>): Matcher<View?> {
