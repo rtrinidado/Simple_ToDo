@@ -40,9 +40,8 @@ class AddTaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.add_task_fragment, container, false)
+        binding = AddTaskFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbarTask)
         return binding.root
     }
 
@@ -61,7 +60,7 @@ class AddTaskFragment : Fragment() {
         binding.setVariable(addTaskVM, viewModel)
         binding.setVariable(addTaskView, this)
 
-        binding.toolbarTask.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             unfocused()
             Navigation.findNavController(it).popBackStack()
         }

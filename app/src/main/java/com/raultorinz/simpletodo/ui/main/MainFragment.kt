@@ -30,9 +30,8 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false)
+        binding = MainFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         return binding.root
     }
 

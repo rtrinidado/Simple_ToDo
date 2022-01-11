@@ -22,7 +22,7 @@
         tools:context=".ui.addtask.AddTaskFragment">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarTask"
+            android:id="@+id/toolbar"
             style="@style/fragment_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:checked="@={addTaskVM.task.completed}"
             android:onClick="@{(view) -> addTaskView.strikeText(((CompoundButton)view).isChecked())}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbarTask" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameTask"
@@ -54,7 +54,7 @@
             style="@style/TextInputLayoutStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/completeCheck"
-            app:layout_constraintTop_toBottomOf="@id/toolbarTask">
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameTaskEdit"
@@ -81,6 +81,7 @@
             app:layout_constraintTop_toBottomOf="@id/nameTask">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|top"
