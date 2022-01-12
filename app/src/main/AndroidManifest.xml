@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupOnly="true"
         android:icon="@drawable/todo_logo"
         android:name=".TodoApplication"
         android:label="@string/app_name"
@@ -11,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleToDo">
         <activity android:name=".MainActivity"
-            android:theme="@style/Theme.SimpleToDo.NoActionBar">
+            android:theme="@style/Theme.SimpleToDo.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
